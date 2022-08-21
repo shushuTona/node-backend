@@ -41,6 +41,9 @@ services:
     build:
       context: .
       dockerfile: ./frontend/Dockerfile
+    ports:
+      - 3000:3000
     volumes:
       - ./frontend:/frontend
+      - ./public:/public
     tty: true
