@@ -1,29 +1,46 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
+import { Todo } from '@prisma/client';
+import { getTodo, getUserTodo, createTodo, updateTodo } from '../models/todoModels';
 
 const todoRootPath = '/todo';
 const todoRouter = express.Router();
 
-// 指定IDのTodoを取得する
-todoRouter.get( '/:id', ( req, res ) => {
+type ErrorResponse = {
+    error: string;
+}
+
+type todoRequestParams = {
+    id: string
+}
+
+// get target todo list  by todo id.
+todoRouter.get( '/:id', async ( req: Request<todoRequestParams>, res: Response<Todo[] | ErrorResponse> ) => {
     const id = req.params.id;
-    res.send( '/api/todo/:id : ' + id );
+    const result = await getTodo( Number(id) );
+    res.json( result );
 } );
 
-// 指定User IDのTodo一覧を取得する
-todoRouter.get( '/user_id/:id', ( req, res ) => {
+// get todo list target user have by todo id.
+todoRouter.get( '/user_id/:id', async ( req: Request<todoRequestParams>, res: Response<Todo[] | ErrorResponse> ) => {
     const id = req.params.id;
-    res.send( '/api/todo/user_id/:id : ' + id );
+    const result = await getUserTodo( Number( id ) );
+    res.json( result );
 } );
 
-// 新しいTodoを追加する
-todoRouter.post( '/create', ( _, res ) => {
-    res.send( '/api/todo/create' );
+// add new todo item to todo table.
+todoRouter.post( '/create', async ( req: Request<{}, {}, Todo>, res: Response<Todo | ErrorResponse> ) => {
+    const todo = req.body;
+    const result = await createTodo( todo );
+    res.json( result );
 } );
 
-// 指定IDのTodoを更新する
-todoRouter.put( '/update/:id', ( req, res ) => {
+// update target todo item by todo id.
+todoRouter.put( '/update/:id', async ( req: Request<todoRequestParams, {}, Todo>, res: Response<Todo | ErrorResponse> ) => {
     const id = req.params.id;
-    res.send( '/api/todo/update/:id : ' + id );
+    const todo = req.body;
+    const result = await updateTodo( Number( id ), todo );
+
+    res.json( result );
 } );
 
 export { todoRootPath, todoRouter }

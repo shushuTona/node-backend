@@ -7,6 +7,9 @@ const HOST = '0.0.0.0';
 
 const app = express();
 
+app.use( express.json() );
+app.use( express.urlencoded( { extended: true } ) );
+
 // setting router
 app.use( '/api' + userRootPath, userRouter );
 app.use( '/api' + todoRootPath, todoRouter );
