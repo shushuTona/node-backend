@@ -16,6 +16,15 @@ model User {
   pass  String
   name  String?
   todos Todo[]
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime?   @updatedAt
+}
+
+enum TodoStatus {
+  DRAFT
+  DOING
+  PENDING
+  COMPLETED
 }
 
 model Todo {
@@ -24,14 +33,7 @@ model Todo {
   content     String     @db.VarChar(255)
   assignee    User       @relation(fields: [assignee_id], references: [id])
   assignee_id Int
-  status      TodoStatus @relation(fields: [status_id], references: [id])
-  status_id   Int
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-}
-
-model TodoStatus {
-  id   Int    @id @default(autoincrement())
-  name String
-  Todo Todo[]
+  status      TodoStatus @default(DRAFT)
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime?   @updatedAt
 }

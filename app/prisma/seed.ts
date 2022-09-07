@@ -2,14 +2,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 const main = async () => {
-    await prisma.todoStatus.createMany( {
-        data: [
-            { name: 'draft' },
-            { name: 'doing' },
-            { name: 'pending' },
-            { name: 'completed' },
-        ],
-    } );
+    //
 }
 
 main()
