@@ -5,8 +5,8 @@ const prisma = new PrismaClient();
 // get all todo from todo table by todo id.
 const getTodo = async ( todoId: number ) => {
     const result = await prisma.todo.findMany( {
-                                                                where: { id: todoId }
-                                                            } );
+        where: { id: todoId }
+    } );
 
     await prisma.$disconnect();
 

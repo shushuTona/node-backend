@@ -14,6 +14,9 @@ export default defineConfig( {
       '^/api': {
         target: 'http://nginx:80/',
       }
+    },
+    watch: {
+      usePolling: true
     }
   }
 })
