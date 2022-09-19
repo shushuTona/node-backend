@@ -3,16 +3,16 @@ import {
 } from 'recoil';
 import './App.css';
 
-import Counter from './components/Counter';
+import TodoList from './components/TodoList';
 
 function App() {
   return (
     <RecoilRoot>
       <div className="App">
-        <Counter />
+        <TodoList />
       </div>
     </RecoilRoot>
   )
 }
 
-export default App
+export default App;
